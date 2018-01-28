@@ -13,8 +13,13 @@ module Protocol = struct
     ViewGroup of string |
     Exchange of (State.t) |
     ListGroups
-      
-end 
+
+  let t =
+    let open Depyt in
+    
+end
+
+                    
 module Member = struct
   type t = {protocol: string; host: string; port: int}
 
