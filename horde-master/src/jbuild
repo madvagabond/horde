@@ -1,0 +1,6 @@
+(jbuild_version 1)
+(library
+ ((name horde_master)
+  (public_name horde-master)
+  (synopsis "Various hubs in the topology of a given network, performing tasks like member management, job submission, and routing.")
+  (libraries (horde-util))))

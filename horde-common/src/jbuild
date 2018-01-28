@@ -1,0 +1,6 @@
+(jbuild_version 1)
+(library
+ ((name horde_common)
+  (public_name horde-common)
+  (synopsis "Shared modules for horde")
+  (libraries (depyt lwt-zmq batteries))))
