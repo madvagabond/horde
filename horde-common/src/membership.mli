@@ -1,8 +1,8 @@
 
-module Protocol : sig
+module TMSG : sig
   type t       
   val to_string: t -> string
-  val of_string: string -> t
+  val of_string: string -> t option
                              
 end 
 
@@ -18,7 +18,7 @@ module Member : sig
   val port: t -> int
   val host: t -> string
                    
-  let compare: t -> t -> int
+  val compare: t -> t -> int
                            
 end
 

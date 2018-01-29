@@ -1,0 +1,18 @@
+version: "0.1.0"
+opam-version: "1.2"
+maintainer: "Samuel Riyad"
+authors: ["Samuel Riyad"]
+tags: []
+license: "MIT"
+
+build: [
+  [ "jbuilder" "subst" ] {pinned}
+  [ "jbuilder" "build" "-p" name "-j" jobs ]
+]
+
+depends: [
+  "jbuilder"
+  "depyt"
+  "lwt-zmq"
+  "batteries"
+]
