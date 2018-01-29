@@ -4,7 +4,14 @@ module TMSG : sig
   val to_string: t -> string
   val of_string: string -> t option
                              
-end 
+end
+
+module RMSG : sig
+  type t
+  val to_string: t -> string 
+  val of_string: string -> t option
+end
+                
 
 (** ADT for contact information*)
 module Member : sig

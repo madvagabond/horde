@@ -188,7 +188,23 @@ module TMSG = struct
 end
 
 module RMSG = struct
-  type t = {success: bool; data: string}    
+  type t = {success: bool; data: string}
+
+  let t =
+    let open Depyt in
+    record "t" (fun success data -> {success; data;} )
+    |+ field "success" bool (fun x -> x.success)
+    |+ field "data" string (fun x -> x.data)
+    |> sealr
+         
+
+
+  let to_string m =
+    Fmt.strf "%a\n" (Depyt.pp_json t) m  
+
+  let of_string body =
+    let decoder = Jsonm.decoder (`String body) in 
+    Depyt.decode_json t decoder |> from_result
 end 
                     
 
