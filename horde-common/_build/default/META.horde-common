@@ -1,0 +1,31 @@
+version = "0.1.0"
+description = "Shared modules for horde"
+requires = "ZMQ
+            batteries
+            bigarray
+            bytes
+            cstruct
+            depyt
+            fmt
+            jsonm
+            lwt
+            lwt-zmq
+            lwt.log
+            lwt.unix
+            num
+            num.core
+            ocplib-endian
+            result
+            sexplib
+            sexplib.0
+            stdint
+            str
+            threads
+            threads.posix
+            uchar
+            unix
+            uutf"
+archive(byte) = "horde_common.cma"
+archive(native) = "horde_common.cmxa"
+plugin(byte) = "horde_common.cma"
+plugin(native) = "horde_common.cmxs"
