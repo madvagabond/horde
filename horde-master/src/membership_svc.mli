@@ -2,17 +2,17 @@
 module Lwt_ZSock = Lwt_zmq.Socket
 module Member = Horde_common.Membership.Member
 module State = Horde_common.Membership.State
-
+module Group = Horde_common.Membership.Group
                  
 (** Thread Safe version of Horde_common.Membership.State *)                     
-module type SafeState = sig
-  type t
+module SafeState : sig
+  type t = {state: State.t; mu: Lwt_mutex.t}
          
   val join_group: t -> string -> Member.t -> t Lwt.t
   val leave_group: t -> string -> Member.t -> t Lwt.t
 
   val merge: t -> State.t -> t Lwt.t 
-  val zero: t Lwt.t 
+  val zero: t 
               
   val view_group: t -> string -> Group.t Lwt.t                              
   val list_groups: t -> (string list) Lwt.t
@@ -35,20 +35,20 @@ end
 module Server : sig
   
   (** type t holds membership state, and it's publish and rep socks*)
-  type t
+  type t = {rep: [`Rep] Lwt_ZSock.t; pub: [`Pub] Lwt_ZSock.t; state: SafeState.t}
 
-  val make: ?state: SafeState.t -> string -> string -> t                                                  
-  val join_group: t -> string -> Member -> unit Lwt.t
+  val make: ?state:SafeState.t -> string -> string -> t                                                  
+  val join_group: t -> string -> Member.t -> unit Lwt.t
   val view_group: t -> string -> unit Lwt.t
                                       
   (* val ping: t -> unit Lwt.t *)
                                       
   val leave_group: t -> string -> Member.t -> unit Lwt.t
-  val view_all: t -> unit Lwt.t
+  val list_groups: t -> unit Lwt.t
 
   val state: t -> SafeState.t
-  val rep_s: t -> Lwt_ZSock.t
-  val pub_s: t -> Lwt_ZSock.t
+  val rep_s: t -> [`Rep] Lwt_ZSock.t
+  val pub_s: t -> [`Pub] Lwt_ZSock.t
                     
 end
 
