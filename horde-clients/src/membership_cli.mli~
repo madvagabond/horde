@@ -1,0 +1,9 @@
+module Lwt_ZSock = Horde_common.ZMQ_helpers.Lwt_ZSock
+module TMSG = Horde_common.Membership.TMSG
+                
+type t = {req: [`Req] Lwt_ZSock.t; sub: [`Sub] Lwt_ZSock;}
+type sub_cb = TMSG.t Lwt.t -> unit Lwt.t
+                                   
+val make: string -> string -> t 
+val watch_group: t -> string -> sub_cb -> unit  Lwt.t 
+val join_group: t -> string -> sub                                   

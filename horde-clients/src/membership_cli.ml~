@@ -1,0 +1,17 @@
+module Common = Horde_common
+module Lwt_ZSock = Common.ZMQ_helpers.Lwt_ZSock
+                     
+module TMSG = Common.Membership.TMSG
+module Member = Common.Membership.Member
+module Group = Common.Membership.Group
+
+module ZMQ_Helpers = Common.ZMQ_helpers
+                       
+                  
+                
+type t = {req: [`Req] Lwt_ZSock.t; sub: [`Sub] Lwt_ZSock;}
+type sub_cb = TMSG.t Lwt.t -> unit Lwt.t
+
+let make raddr saddr =
+  
+  
