@@ -1,7 +1,7 @@
 open Lwt.Infix
        
 module Common = Horde_common
-module Lwt_ZSock = Common.ZMQ_helpers.Lwt_ZSock
+module Lwt_ZSock = Common.Zmq_helpers.Lwt_ZSock
                      
 module TMSG = Common.Membership.TMSG
 module RMSG = Common.Membership.RMSG 
@@ -9,25 +9,25 @@ module RMSG = Common.Membership.RMSG
 module Member = Common.Membership.Member
 module Group = Common.Membership.Group
 
-module ZMQ_Helpers = Common.ZMQ_helpers
+module ZMQ_Helpers = Common.Zmq_helpers
 module ZSock = ZMQ_Helpers.ZSock
                 
-type t = {req: [`Req] Lwt_ZSock.t; sub: [`Sub] Lwt_ZSock;}
-type sub_cb = TMSG.t Lwt.t -> unit Lwt.t
+type t = {req: [`Req] Lwt_ZSock.t; sub: [`Sub] Lwt_ZSock.t;}
 
+                
 let make raddr saddr =
   let req_s = ZMQ_Helpers.make_req raddr in
   let sub_s = ZMQ_Helpers.make_sub saddr in
   {req = req_s; sub= sub_s}
 
 let rec handle_sub sub_s cb =
-  LwtZSock.recv sub_s >>= fun gid ->
-  LwtZSock.recv sub_s >>= fun data ->
+  Lwt_ZSock.recv sub_s >>= fun gid ->
+  Lwt_ZSock.recv sub_s >>= fun data ->
   let msg_o = TMSG.of_string data in
   match msg_o with
   | Some x ->
      cb x >>= fun () -> handle_sub sub_s cb
-  | None x ->
+  | None ->
      Lwt.fail_with "Unable to unmarshal message" >>= fun e ->
      handle_sub sub_s cb 
 
@@ -36,7 +36,7 @@ let watch_group t gid cb =
   let sub_s = t.sub in
   let sub_z = Lwt_ZSock.to_socket sub_s in
   ZSock.subscribe sub_z gid;
-  handle_sub (Lwt_ZSock.to_socket sub_z) cb
+  handle_sub (Lwt_ZSock.of_socket sub_z) cb
 
 let send_req req_s m =
   let data = TMSG.to_string m in
@@ -44,22 +44,23 @@ let send_req req_s m =
 
 let recv_rep req_s =
   Lwt_ZSock.recv req_s >>= fun data ->
-  RMSG.of_string data
+  Lwt.return (RMSG.of_string data)
 
                  
 let fail_filter rep_opt =
+  let open RMSG in
   match rep_opt with
   | Some x when x.success = true ->
-     x
+     Lwt.return x
   | Some x when x.success = false ->
      Lwt.fail_with "operation was not successful"
-  | None -> "failure to decode RMSG"
+  | None -> Lwt.fail_with "failure to decode RMSG"
                  
 
 
 let send_and_recv req_s msg =
   send_req req_s msg >>= fun () ->
-  recv_req req_s >>= fun rep_o ->
+  recv_rep req_s >>= fun rep_o ->
   fail_filter rep_o 
 
               
@@ -72,7 +73,7 @@ let join_group t gid m =
 let leave_group t gid m =
   let open TMSG in
   let msg = Leave (gid, m) in
-  send_and_recv t.req >>= fun rep ->
+  send_and_recv t.req msg >>= fun rep ->
   Lwt.return_unit
     
 let view_group t gid =

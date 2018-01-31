@@ -1,0 +1,7 @@
+(jbuild_version 1)
+(library
+ ((name horde_clients)
+  (public_name horde-clients)
+  (synopsis  "Clients for various services")
+  (libraries (horde-common) )))
+
