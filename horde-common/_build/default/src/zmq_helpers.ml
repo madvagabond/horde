@@ -34,16 +34,3 @@ let make_rep addr =
   let sock = ZSock.create ctx ZSock.rep in
   ZSock.bind sock addr;
   Lwt_ZSock.of_socket sock 
-
-let make_req addr =
-  let ctx = CTX.create () in
-  let sock = ZSock.create ctx ZSock.req in
-  ZSock.connect sock addr;
-  Lwt_ZSock.of_socket sock
-
-let make_sub addr =
-  let make_req addr =
-  let ctx = CTX.create () in
-  let sock = ZSock.create ctx ZSock.sub in
-  ZSock.connect sock addr;
-  Lwt_ZSock.of_socket sock

@@ -1,0 +1,8 @@
+(** @canonical Horde_common.Membership *)
+module Membership = Horde_common__Membership
+
+(** @canonical Horde_common.Misc *)
+module Misc = Horde_common__Misc
+
+(** @canonical Horde_common.Zmq_helpers *)
+module Zmq_helpers = Horde_common__Zmq_helpers

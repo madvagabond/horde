@@ -3,7 +3,7 @@ module BatHashTbl = Batteries.Hashtbl
 module BatSet = Batteries.Set
                   
 module RMSG : sig
-  type t = {success: bool; data: string}
+  type t
   val to_string: t -> string 
   val of_string: string -> t option
 end

@@ -1,0 +1,25 @@
+lib: [
+  "_build/install/default/lib/horde-common/META" {"META"}
+  "_build/install/default/lib/horde-common/opam" {"opam"}
+  "_build/install/default/lib/horde-common/horde_common.cmi"
+  "_build/install/default/lib/horde-common/horde_common.cmx"
+  "_build/install/default/lib/horde-common/horde_common.cmt"
+  "_build/install/default/lib/horde-common/horde_common.ml-gen"
+  "_build/install/default/lib/horde-common/horde_common__Membership.cmi"
+  "_build/install/default/lib/horde-common/horde_common__Membership.cmx"
+  "_build/install/default/lib/horde-common/horde_common__Membership.cmt"
+  "_build/install/default/lib/horde-common/horde_common__Membership.cmti"
+  "_build/install/default/lib/horde-common/membership.mli"
+  "_build/install/default/lib/horde-common/horde_common__Misc.cmi"
+  "_build/install/default/lib/horde-common/horde_common__Misc.cmx"
+  "_build/install/default/lib/horde-common/horde_common__Misc.cmt"
+  "_build/install/default/lib/horde-common/misc.ml"
+  "_build/install/default/lib/horde-common/horde_common__Zmq_helpers.cmi"
+  "_build/install/default/lib/horde-common/horde_common__Zmq_helpers.cmx"
+  "_build/install/default/lib/horde-common/horde_common__Zmq_helpers.cmt"
+  "_build/install/default/lib/horde-common/zmq_helpers.ml"
+  "_build/install/default/lib/horde-common/horde_common.cma"
+  "_build/install/default/lib/horde-common/horde_common.cmxa"
+  "_build/install/default/lib/horde-common/horde_common.a"
+  "_build/install/default/lib/horde-common/horde_common.cmxs"
+]
